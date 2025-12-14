@@ -1,0 +1,684 @@
+/* ----------------------------------------------------------------
+    Police de base (Assurez-vous que Roboto est importé si nécessaire)
+---------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* ----------------------------------------------------------------
+    Thème Général & Reset
+---------------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #202124; /* Couleur de fond principale (Gris très foncé/noir) */
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ----------------------------------------------------------------
+    Styles de la Page d'Accueil (landing-body)
+---------------------------------------------------------------- */
+
+.landing-body {
+    background-color: white; /* Fond blanc clair */
+    color: #3c4043; /* Texte gris foncé */
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.landing-main-content {
+    max-width: 650px;
+    text-align: center;
+    padding: 20px;
+}
+
+.header-title {
+    font-size: 3.5rem; /* Très grand titre */
+    font-weight: 400; /* Mince */
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #5f6368;
+    margin-bottom: 40px;
+}
+
+.app-name {
+    /* Style pour le nom de l'application dessiné à la main (Rouge dans l'image) */
+    color: #ea4335;
+    font-weight: bold;
+    text-decoration: underline; /* Placeholder visuel */
+}
+
+/* ------------------- Saisie du Nom ------------------- */
+.name-input-group {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.name-input-group label {
+    display: none; /* Cache le label pour un look minimaliste */
+}
+
+#nomUtilisateur {
+    width: 80%;
+    max-width: 350px;
+    padding: 12px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+#nomUtilisateur:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 1px #4285f4;
+}
+
+
+/* ------------------- Boutons d'Action ------------------- */
+
+.main-actions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.action-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px; /* Bordures arrondies */
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.action-button:active {
+    transform: scale(0.98);
+}
+
+/* Bouton Création (Bleu) */
+.bouton-principal {
+    background-color: #1a73e8;
+    color: white;
+}
+
+.bouton-principal:hover {
+    background-color: #1764c8;
+}
+
+/* ------------------- Jonction par Code ------------------- */
+.join-group {
+    display: flex;
+    align-items: center;
+}
+
+.join-form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.code-input-wrapper {
+    position: relative;
+    padding: 0;
+    border: 1px solid #dadce0;
+    border-radius: 25px; /* Rond comme le bouton */
+    background-color: white;
+    display: flex;
+    align-items: center;
+    width: 250px;
+}
+
+/* Remplacer l'icône par le Font Content si pas de font icon */
+.icon-keyboard::before {
+    content: '⌨️'; /* Icône clavier */
+    padding-left: 15px;
+    font-size: 1.2rem;
+    line-height: 1; /* Assure le centrage vertical */
+    color: #5f6368;
+}
+
+#idReunionRejoindre {
+    border: none;
+    padding: 12px 10px 12px 5px;
+    width: calc(100% - 40px);
+    font-size: 1rem;
+}
+
+#idReunionRejoindre:focus {
+    outline: none;
+}
+
+/* Bouton Participer (Couleur neutre avec bordure) */
+.bouton-secondaire {
+    background-color: white;
+    color: #1a73e8;
+    border: 1px solid #dadce0;
+    padding: 12px 18px;
+}
+
+.bouton-secondaire:hover:not(:disabled) {
+    background-color: #f8f9fa;
+    border-color: #c9cdd4;
+}
+
+/* Style si le bouton est désactivé */
+.disabled-style {
+    color: #9aa0a6!important;
+    cursor: not-allowed;
+    background-color: white;
+    border-color: #dadce0;
+}
+
+/* ------------------- Divers ------------------- */
+.separator-line {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 500px;
+    height: 1px;
+    background-color: #dadce0;
+}
+
+.message.erreur {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fce8e6;
+    color: #ea4335;
+    border: 1px solid #ea4335;
+    border-radius: 4px;
+}
+
+/* Adaptation pour l'icône dans le bouton Créer */
+.icon-plus::before {
+    content: '+';
+    font-size: 1.5rem;
+    line-height: 0;
+} 
+
+/* ================================================================
+    Styles de la Page de Réunion
+================================================================ */
+.reunion-page {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------- Header Bar (Top) ------------------- */
+.header-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(32, 33, 36, 0.8), transparent);
+}
+
+.reunion-info-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.heure-display {
+    color: white;
+}
+
+.id-reunion-display {
+    color: #9aa0a6; /* Gris clair */
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+.participants-badge {
+    background-color: #4b4b4b; /* Fond du badge (Gris sombre) */
+    color: white;
+    border: 1px solid #7e7e7e;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.participants-badge:hover {
+    background-color: #5c5c5c;
+}
+
+/* Remplacement par icône si pas de font icon */
+.icon-participants::before { content: '👥'; margin-right: 5px; }
+
+/* ------------------- Contenu Vidéo Principal ------------------- */
+.videos-conteneur {
+    flex: 1;
+    display: flex;
+    /* justify-content et align-items seront gérés par JS pour l'affichage en grille/mosaïque */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #3c4043; /* Couleur de fond de l'espace vidéo */
+}
+
+/* Espace Vidéo / Avatar Central */
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-central {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    /* Gradient vert/cyan similaire à l'image */
+    background: linear-gradient(135deg, #27ae60, #3498db);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* ------------------- Vidéo Locale (Overlay) ------------------- */
+.video-local-overlay {
+    position: absolute;
+    bottom: 100px; /* Laisser de l'espace pour la barre de contrôles */
+    left: 20px;
+    width: 240px;
+    height: 140px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #4b4b4b;
+    border: 2px solid white; /* Petite bordure blanche */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.video-local-overlay video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-local-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: relative;
+    /* Utiliser le pseudo-élément pour un symbole si besoin, ou laisser vide */
+}
+
+/* Icône Mute rouge (par défaut) */
+.status-icon.mute-red {
+    background-color: #e74c3c;
+}
+.status-icon.mute-red::after {
+    /* content: '!'; */ /* Symbole si nécessaire */
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+}
+
+/* Icône Audio Actif (Vert) - Ajoutée pour cohérence avec app.js */
+.status-icon.audio-actif-green {
+    background-color: #27ae60;
+}
+.status-icon.audio-actif-green::after {
+    /* content: '✓'; */ /* Symbole si nécessaire */
+}
+
+
+/* ------------------- Conteneur Vidéo Distante Dynamique ------------------- */
+.video-distante {
+    /* Les styles de base pour les petites vignettes */
+    width: 300px; /* Taille initiale large */
+    height: 200px;
+    min-width: 160px;
+    min-height: 90px;
+    background: #4b4b4b;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative; /* Pour positionner le label */
+    border: 2px solid transparent; /* Bordure par défaut */
+    transition: border 0.2s;
+}
+
+.video-distante video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ------------------- Partage d'Écran ------------------- */
+.partage-ecran-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    position: relative;
+}
+
+.partage-ecran-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Assure que tout l'écran partagé est visible */
+}
+
+.partage-ecran-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* ------------------- Footer Bar (Contrôles) ------------------- */
+.footer-controles-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 150;
+    background: rgba(32, 33, 36, 0.95); /* Fond plus opaque */
+}
+
+.reunion-controles-centre {
+    display: flex;
+    gap: 15px;
+}
+
+.controle-bouton {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+/* Styles des boutons basés sur l'état/fonction */
+
+/* Mic ON (Vert) */
+.controle-bouton.audio-actif { background-color: #27ae60; }
+.controle-bouton.audio-actif:hover { background-color: #2ecc71; }
+.icon-mic-on::before { content: '🎤'; }
+
+/* Mic OFF (Rouge) */
+.controle-bouton.audio-inactif { background-color: #e74c3c; }
+.controle-bouton.audio-inactif:hover { background-color: #c0392b; }
+.icon-mic-off::before { content: '🔇'; }
+
+/* Vidéo ON (Bleu) - Utilisé aussi pour partage/main levée s'ils sont désactivés */
+.controle-bouton.video-actif { background-color: #3498db; }
+.controle-bouton.video-actif:hover { background-color: #2980b9; }
+.icon-camera-on::before { content: '📹'; }
+
+/* Vidéo OFF (Gris/Muted) */
+.controle-bouton.video-inactif { background-color: #5c6267; }
+.controle-bouton.video-inactif:hover { background-color: #4b4b4b; }
+.icon-camera-off::before { content: '📷'; }
+
+/* Partage d'écran */
+.icon-share::before { content: '💻'; }
+#boutonPartageEcran { background-color: #5c6267; } /* Gris par défaut */
+#boutonPartageEcran.video-actif { background-color: #3498db; } /* Bleu si actif */
+
+/* Lever la main */
+.icon-hand::before { content: '✋'; }
+#boutonLeverLaMain { background-color: #5c6267; } /* Gris par défaut */
+.controle-bouton.main-levee-actif { background-color: #f1c40f; } /* Jaune si actif */
+.controle-bouton.main-levee-actif:hover { background-color: #f39c12; }
+
+/* Enregistrer */
+.icon-record::before { content: '⏺️'; }
+#boutonEnregistrer { background-color: #5c6267; } /* Gris par défaut */
+.controle-bouton.enregistrement-actif { background-color: #e74c3c; } /* Rouge si actif */
+.controle-bouton.enregistrement-actif:hover { background-color: #c0392b; }
+
+
+/* Bouton Quitter (Rouge distinct) */
+.bouton-danger {
+    background-color: #e74c3c;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px; /* Très arrondi */
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.bouton-danger:hover {
+    background-color: #c0392b;
+}
+
+/* ------------------- Liste des Participants (Sidebar) ------------------- */
+.participants-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: #3c4043;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transform: translateX(100%); /* Caché par défaut */
+    transition: transform 0.3s ease-in-out;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.participants-sidebar.visible {
+    transform: translateX(0); /* Rendu visible */
+}
+
+.participants-section h3 {
+    color: white;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #4b4b4b;
+    padding-bottom: 0.5rem;
+}
+
+.liste-participants {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.participant-item {
+    background: #4b4b4b;
+    padding: 0.6rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.participant-statut {
+    display: flex;
+    gap: 8px; /* Augmenter l'espace entre les badges de statut */
+}
+
+.statut-badge {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: flex; /* Pour centrer le contenu comme la main levée */
+    justify-content: center;
+    align-items: center;
+    font-size: 8px;
+    font-weight: bold;
+    color: #3c4043;
+}
+/* Adaptez ces couleurs aux icônes du thème sombre */
+.statut-badge.audio-actif { background-color: #2ecc71; }
+.statut-badge.audio-inactif { background-color: #e74c3c; }
+.statut-badge.video-actif { background-color: #3498db; }
+.statut-badge.video-inactif { background-color: #9aa0a6; }
+.statut-badge.main-levee-actif { 
+    background-color: #f1c40f; /* Jaune pour la main levée */
+    width: 16px; /* Agrandir pour la main levée */
+    height: 16px;
+    font-size: 10px;
+}
+
+/* ------------------- Message de statut (Toast) ------------------- */
+.message-statut {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: #202124;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 200;
+    white-space: nowrap;
+}
+
+
+/* ----------------------------------------------------------------
+    Responsive
+---------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Page d'Accueil */
+    .header-title {
+        font-size: 2.5rem;
+    }
+    .subtitle {
+        font-size: 1rem;
+    }
+    .main-actions-container {
+        flex-direction: column;
+    }
+    .join-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .code-input-wrapper {
+        width: 100%;
+        max-width: 300px;
+    }
+    .action-button {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    /* Page de Réunion */
+    .header-bar {
+        padding: 0.75rem 1rem;
+        flex-direction: row; /* Garder en ligne sur mobile */
+        justify-content: space-between;
+    }
+
+    .participants-badge {
+        position: static; /* Le laisser dans le flux normal */
+    }
+
+    .video-local-overlay {
+        width: 120px;
+        height: 70px;
+        bottom: 80px;
+        left: 10px;
+    }
+
+    .footer-controles-bar {
+        padding: 0.75rem 0;
+        /* Rendre les contrôles plus compacts */
+        justify-content: space-around;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .reunion-controles-centre {
+        gap: 8px;
+    }
+    
+    .controle-bouton {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .bouton-danger {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        margin-left: 10px;
+    }
+    
+    .participants-sidebar {
+        width: 250px;
+    }
+}

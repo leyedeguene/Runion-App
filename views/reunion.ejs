@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+
+    <main class="reunion-page">
+        
+        <div class="header-bar">
+            <div class="reunion-info-top">
+                <span class="heure-display">--:--</span>
+                <span class="id-reunion-display">Code: <%= idReunion %></span>
+            </div>
+
+            <button id="boutonParticipants" class="participants-badge">
+                <i class="icon-participants"></i> Participants (1)
+            </button>
+        </div>
+
+        <div id="videosDistantes" class="videos-conteneur">
+
+            <div class="video-placeholder">
+                <div class="avatar-central">
+                    <span id="avatar-lettre"><%= nomUtilisateur.charAt(0).toUpperCase() %></span>
+                </div>
+            </div>
+            
+            <div id="partageEcranContainer" class="partage-ecran-container" style="display: none;">
+                <video id="videoPartageEcran" autoplay></video>
+                <div class="partage-ecran-label">Partage d'écran en cours</div>
+            </div>
+
+            <div id="monVideoContainer" class="video-local-overlay">
+                <video id="monVideo" autoplay muted></video>
+
+                <div class="video-local-label">
+                    <span id="nomUtilisateurLocal"><%= nomUtilisateur %> (Moi)</span>
+                    
+                    <div id="statutAudioLocal" class="status-icon mute-red"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-controles-bar">
+            <div class="reunion-controles-centre">
+                <button id="boutonAudio" class="controle-bouton audio-actif">
+                    <i class="icon-mic-on"></i>
+                </button>
+
+                <button id="boutonVideo" class="controle-bouton video-actif">
+                    <i class="icon-camera-on"></i>
+                </button>
+
+                <button id="boutonPartageEcran" class="controle-bouton">
+                    <i class="icon-share"></i>
+                </button>
+
+                <button id="boutonLeverLaMain" class="controle-bouton">
+                    <i class="icon-hand"></i>
+                </button>
+
+                <button id="boutonEnregistrer" class="controle-bouton">
+                    <i class="icon-record"></i>
+                </button>
+            </div>
+
+            <button id="boutonQuitter" class="bouton-danger">
+                Quitter
+            </button>
+        </div>
+
+        <div id="listeParticipantsSidebar" class="participants-sidebar">
+            <div class="participants-section">
+                <h3>Participants</h3>
+                <div id="listeParticipants" class="liste-participants">
+                    </div>
+            </div>
+        </div>
+
+        <div id="messageStatut" class="message-statut" style="display: none;"></div>
+
+<div id="monVideoContainer" class="video-local-container">
+    <video id="monVideo" muted autoplay playsinline></video>
+    <div class="video-local-label">
+        <span id="monLabelNom"></span> <div id="statutAudioLocal" class="status-icon mute-red"></div>
+    </div>
+</div>
+
+<div id="partageEcranContainer" class="share-screen-container" style="display:none;">
+    <video id="videoPartageEcran" autoplay playsinline></video>
+    <div class="video-local-label">
+        <span id="nomPartageEcran">Écran partagé</span>
+    </div>
+</div>
+
+
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <script src="/js/app.js"></script>
+
+    <script>
+        window.onload = function() {
+            // Variables passées depuis le serveur (via EJS)
+            const idReunion = '<%= idReunion %>';
+            const nomUtilisateur = '<%= nomUtilisateur %>';
+            
+            // 1. Initialiser la logique de la réunion dans app.js
+            initialiserReunion(idReunion, nomUtilisateur);
+
+            // 2. Mise à jour initiale et continue de l'heure
+            function updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('fr-FR', {
+                    hour: '2-digit', 
+                    minute:'2-digit'
+                });
+                document.querySelector('.heure-display').textContent = timeString;
+            }
+            updateTime();
+            setInterval(updateTime, 60000); // Mettre à jour toutes les minutes
+
+            // 3. Logic pour basculer la sidebar des participants
+            document.getElementById('boutonParticipants').addEventListener('click', () => {
+                const sidebar = document.getElementById('listeParticipantsSidebar');
+                sidebar.classList.toggle('visible');
+            });
+            
+            // 4. Initialiser la première lettre de l'avatar (pour le placeholder)
+            const initial = nomUtilisateur.charAt(0).toUpperCase();
+            document.getElementById('avatar-lettre').textContent = initial;
+        };
+    </script>
+</body>
+</html>

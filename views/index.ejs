@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body class="landing-body">
+
+    <main class="landing-main-content">
+        <h1 class="header-title">Appels vidéo et visioconférences pour tous</h1>
+
+        <p class="subtitle">
+            Communiquez, collaborez et célébrez les bons moments où que vous soyez avec
+            <span class="app-name">Réunion App</span>
+        </p>
+
+        <% if (typeof erreur !== 'undefined') { %>
+        <div class="message erreur">
+            <%= erreur %>
+        </div>
+        <% } %>
+
+        <div class="name-input-group">
+               <input type="text" id="nomUtilisateur" placeholder="Entrez votre nom d'utilisateur" required>
+        </div>
+
+        <div class="main-actions-container">
+
+            <form id="formCreerReunion" action="/creer-reunion" method="POST" class="action-form">
+                <input type="hidden" name="nomUtilisateur" id="creerNomUtilisateur">
+                <button type="submit" class="action-button bouton-principal">
+                    <i class="icon-plus"></i> Nouvelle réunion
+                </button>
+            </form>
+
+            <div class="join-group">
+                <form id="formRejoindreReunion" action="/rejoindre-reunion" method="POST" class="join-form">
+                    <input type="hidden" name="nomUtilisateur" id="rejoindreNomUtilisateur">
+
+                    <div class="code-input-wrapper">
+                        <i class="icon-keyboard"></i>
+                        <input type="text" name="idReunion" id="idReunionRejoindre" placeholder="Saisir un code ou un lien" required>
+                    </div>
+
+                    <button type="submit" class="action-button bouton-secondaire disabled-style" id="btnParticiper" disabled>
+                        Participer
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="separator-line"></div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nomInput = document.getElementById('nomUtilisateur');
+            const creerNomHidden = document.getElementById('creerNomUtilisateur');
+            const rejoindreNomHidden = document.getElementById('rejoindreNomUtilisateur');
+            const idReunionInput = document.getElementById('idReunionRejoindre');
+            const btnParticiper = document.getElementById('btnParticiper');
+            const formCreerReunion = document.getElementById('formCreerReunion');
+
+            // Fonction de mise à jour de l'état du bouton "Participer"
+            function updateJoinButtonState() {
+                const nomValide = nomInput.value.trim().length > 0;
+                const idValide = idReunionInput.value.trim().length > 0;
+
+                // Le bouton est activé seulement si le nom ET le code sont remplis
+                btnParticiper.disabled = !(nomValide && idValide);
+                btnParticiper.classList.toggle('disabled-style', btnParticiper.disabled);
+            }
+
+            // Synchronisation du champ de nom d'utilisateur avec les champs cachés des formulaires
+            function syncInputs() {
+                const nom = nomInput.value.trim();
+                creerNomHidden.value = nom;
+                rejoindreNomHidden.value = nom;
+                updateJoinButtonState();
+            }
+
+            // Écouteurs d'événements pour la synchronisation et la validation en temps réel
+            nomInput.addEventListener('input', syncInputs);
+            idReunionInput.addEventListener('input', updateJoinButtonState);
+
+            // Empêcher la création de réunion si le nom est vide
+            formCreerReunion.addEventListener('submit', (e) => {
+                if (nomInput.value.trim() === '') {
+                    e.preventDefault();
+                    alert("Veuillez entrer votre nom avant de créer une réunion.");
+                    nomInput.focus();
+                }
+            });
+            
+            // Empêcher la participation si le nom est vide (au cas où le bouton n'était pas désactivé)
+            document.getElementById('formRejoindreReunion').addEventListener('submit', (e) => {
+                if (nomInput.value.trim() === '') {
+                    e.preventDefault();
+                    alert("Veuillez entrer votre nom avant de rejoindre une réunion.");
+                    nomInput.focus();
+                }
+            });
+
+
+            // Initialisation de l'état au chargement de la page
+            syncInputs();
+        });
+    </script>
+</body>
+</html>
